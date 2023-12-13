@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
@@ -35,6 +36,14 @@ public abstract class BaseSoftDeleteEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "deleted", columnDefinition = "boolean default false")
+    @Column(name = "deleted")
+    @ColumnDefault("false")
     private Boolean deleted = Boolean.FALSE;
+
+    @PrePersist
+    public void defaultDeleted() {
+        if (Objects.isNull(deleted)) {
+            deleted = Boolean.FALSE;
+        }
+    }
 }
