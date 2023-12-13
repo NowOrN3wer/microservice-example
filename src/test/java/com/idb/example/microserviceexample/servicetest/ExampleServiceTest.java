@@ -40,8 +40,8 @@ public class ExampleServiceTest {
     private ExampleServiceImp service;
     @Mock
     private ModelMapper modelMapper;
-    private ExampleDto dto;
-    private Example entity;
+    private static ExampleDto dto;
+    private static Example entity;
 
    @Before
     public void setUp(){
@@ -50,10 +50,6 @@ public class ExampleServiceTest {
     }
     @BeforeAll
     public static void intTests() {
-    }
-
-    @Test
-    public void createTest() {
         entity = new Example();
         entity.setName("name");
         entity.setId(1L);
@@ -62,7 +58,13 @@ public class ExampleServiceTest {
         dto.setName("name");
         dto.setId(1L);
         dto.setVersion(1);
+    }
+
+    @Test
+    public void createTest() {
         Mockito.when(repository.save(any(Example.class))).thenReturn(entity);
+        when(modelMapper.map(eq(dto), eq(Example.class))).thenReturn(entity);
+        when(modelMapper.map(eq(entity), eq(ExampleDto.class))).thenReturn(dto);
         ExampleDto result = service.create(dto);
         assertNotNull(result);
         assertEquals(dto, result);
