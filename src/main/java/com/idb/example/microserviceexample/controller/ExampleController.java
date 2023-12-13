@@ -20,7 +20,7 @@ public class ExampleController {
         return new ResponseEntity<>("HELLO WORD", HttpStatus.OK);
     }
 
-    @PostMapping("save")
+    @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody ExampleDto dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
     }
