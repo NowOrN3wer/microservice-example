@@ -15,11 +15,6 @@ public class ExampleController {
         this.service = service;
     }
 
-    @GetMapping("getMessage")
-    ResponseEntity<?> getAllProducts() {
-        return new ResponseEntity<>("HELLO WORD", HttpStatus.OK);
-    }
-
     @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody ExampleDto dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
