@@ -22,6 +22,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -32,10 +34,10 @@ import java.util.Collections;
 
 @ExtendWith(SpringExtension.class)
 public class ExampleServiceTest {
-    @MockBean
+    @Mock
     private IExampleRepository repository;
     @InjectMocks
-    private IExampleService service = new ExampleServiceImp(repository);
+    private ExampleServiceImp service;
     @Mock
     private ModelMapper modelMapper;
     private ExampleDto dto;
@@ -61,7 +63,6 @@ public class ExampleServiceTest {
         dto.setId(1L);
         dto.setVersion(1);
         Mockito.when(repository.save(any(Example.class))).thenReturn(entity);
-
         ExampleDto result = service.create(dto);
         assertNotNull(result);
         assertEquals(dto, result);
