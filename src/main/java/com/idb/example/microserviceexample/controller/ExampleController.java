@@ -21,8 +21,8 @@ public class ExampleController {
     }
 
     @PostMapping("save")
-    public ResponseEntity<?> saveProduct(@RequestBody ExampleDto dto) {
-        return new ResponseEntity<>(service.save(dto), HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody ExampleDto dto) {
+        return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
     }
 
 }

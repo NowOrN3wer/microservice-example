@@ -5,10 +5,13 @@ import com.idb.example.microserviceexample.model.ExampleDto;
 import com.idb.example.microserviceexample.repository.IExampleRepository;
 import com.idb.example.microserviceexample.service.IExampleService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ExampleServiceImp implements IExampleService {
+
+    @Autowired
     private final IExampleRepository repository;
     ModelMapper modelMapper = new ModelMapper();
 
@@ -17,7 +20,7 @@ public class ExampleServiceImp implements IExampleService {
     }
 
     @Override
-    public ExampleDto save(ExampleDto dto) {
+    public ExampleDto create(ExampleDto dto) {
         var entity = modelMapper.map(dto, Example.class);
         return modelMapper.map(repository.save(entity), ExampleDto.class);
     }
