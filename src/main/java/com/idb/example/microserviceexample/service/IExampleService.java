@@ -5,4 +5,6 @@ import com.idb.example.microserviceexample.model.ExampleDto;
 public interface IExampleService {
     ExampleDto create(ExampleDto dto);
 
+    ExampleDto update(ExampleDto dto);
+
 }

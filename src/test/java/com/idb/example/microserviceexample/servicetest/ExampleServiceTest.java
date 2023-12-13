@@ -57,4 +57,13 @@ public class ExampleServiceTest {
         assertNotNull(result);
         assertEquals(dto, result);
     }
+    @Test
+    public void updateTest() {
+        Mockito.when(repository.save(any(Example.class))).thenReturn(entity);
+        when(modelMapper.map(eq(dto), eq(Example.class))).thenReturn(entity);
+        when(modelMapper.map(eq(entity), eq(ExampleDto.class))).thenReturn(dto);
+        ExampleDto result = service.update(dto);
+        assertNotNull(result);
+        assertEquals(dto, result);
+    }
 }

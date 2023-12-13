@@ -25,6 +25,12 @@ public class ExampleServiceImp implements IExampleService {
         return entityToDto(repository.save(entity));
     }
 
+    @Override
+    public ExampleDto update(ExampleDto dto) {
+        var entity = dtoToEntity(dto);
+        return entityToDto(repository.save(entity));
+    }
+
     private Example dtoToEntity(ExampleDto dto){
         return modelMapper.map(dto, Example.class);
     }

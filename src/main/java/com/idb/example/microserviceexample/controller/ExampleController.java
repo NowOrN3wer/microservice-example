@@ -19,5 +19,9 @@ public class ExampleController {
     public ResponseEntity<?> create(@RequestBody ExampleDto dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
     }
+    @PutMapping("update")
+    public ResponseEntity<?> update(@RequestBody ExampleDto dto) {
+        return new ResponseEntity<>(service.update(dto), HttpStatus.OK);
+    }
 
 }
