@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-public class ExampleDto extends BaseDto {
+public class SampleDto extends BaseSoftDeleteDto {
     @NotBlank
     private String name;
 }

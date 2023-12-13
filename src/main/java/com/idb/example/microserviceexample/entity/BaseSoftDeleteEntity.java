@@ -2,6 +2,7 @@ package com.idb.example.microserviceexample.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
@@ -34,6 +35,6 @@ public abstract class BaseSoftDeleteEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "deleted", updatable = false, nullable = false)
+    @Column(name = "deleted", columnDefinition = "boolean default false")
     private Boolean deleted = Boolean.FALSE;
 }

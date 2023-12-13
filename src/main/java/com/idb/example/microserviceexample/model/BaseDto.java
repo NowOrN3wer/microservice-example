@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 @Data
 @MappedSuperclass
-public abstract class BaseModel {
+public abstract class BaseDto {
     private Long id;
     private UUID uuid;
     private Integer version;
