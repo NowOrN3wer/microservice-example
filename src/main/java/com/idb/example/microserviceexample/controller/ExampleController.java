@@ -23,5 +23,4 @@ public class ExampleController {
     public ResponseEntity<?> update(@RequestBody ExampleDto dto) {
         return new ResponseEntity<>(service.update(dto), HttpStatus.OK);
     }
-
 }

@@ -44,7 +44,6 @@ public class ExampleControllerTest {
         dto.setName("name");
         dto.setId(1L);
         dto.setVersion(1);
-
     }
 
     @Test
