@@ -7,6 +7,9 @@ import com.idb.example.microserviceexample.service.IExampleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class ExampleServiceImp implements IExampleService {
@@ -31,11 +34,22 @@ public class ExampleServiceImp implements IExampleService {
         return entityToDto(repository.save(entity));
     }
 
-    private Example dtoToEntity(ExampleDto dto){
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByUuid(UUID uuid) {
+        repository.deleteByUuid(uuid);
+    }
+
+    private Example dtoToEntity(ExampleDto dto) {
         return modelMapper.map(dto, Example.class);
     }
 
-    private ExampleDto entityToDto(Example entity){
-       return modelMapper.map(entity, ExampleDto.class);
+    private ExampleDto entityToDto(Example entity) {
+        return modelMapper.map(entity, ExampleDto.class);
     }
 }

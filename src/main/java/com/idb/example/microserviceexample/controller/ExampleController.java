@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/example/")
 public class ExampleController {
@@ -19,8 +21,20 @@ public class ExampleController {
     public ResponseEntity<?> create(@RequestBody ExampleDto dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
     }
+
     @PutMapping("update")
     public ResponseEntity<?> update(@RequestBody ExampleDto dto) {
         return new ResponseEntity<>(service.update(dto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("deleteById/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        service.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping("deleteByUuid/{uuid}")
+    public ResponseEntity<?> deleteByUuid(@PathVariable UUID uuid) {
+        service.deleteByUuid(uuid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

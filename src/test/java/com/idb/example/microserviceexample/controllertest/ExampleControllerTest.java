@@ -16,9 +16,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -71,5 +75,28 @@ public class ExampleControllerTest {
         ExampleDto result = service.update(dto);
         assertNotNull(result);
         assertEquals(dto, result);
+    }
+
+    @Test
+    public void deleteByIdTest() throws Exception {
+        doNothing().when(service).deleteById(anyLong());
+        mockMvc.perform(delete(apiString + "deleteById/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(1)))
+                .andExpect(status().isOk());
+        service.deleteById(1L);
+        verify(service, times(2)).deleteById(anyLong());
+    }
+
+    @Test
+    public void deleteByUuidTest() throws Exception {
+        var uuid = UUID.randomUUID();
+        doNothing().when(service).deleteByUuid(any(UUID.class));
+        mockMvc.perform(delete(apiString + "deleteByUuid/" + uuid)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(uuid)))
+                .andExpect(status().isOk());
+        service.deleteById(1L);
+        verify(service, times(1)).deleteByUuid(any(UUID.class));
     }
 }

@@ -15,6 +15,8 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -57,6 +59,7 @@ public class ExampleServiceTest {
         assertNotNull(result);
         assertEquals(dto, result);
     }
+
     @Test
     public void updateTest() {
         Mockito.when(repository.save(any(Example.class))).thenReturn(entity);
@@ -65,5 +68,18 @@ public class ExampleServiceTest {
         ExampleDto result = service.update(dto);
         assertNotNull(result);
         assertEquals(dto, result);
+    }
+
+    @Test
+    public void deleteByIdTest() {
+        Mockito.doNothing().when(repository).deleteById(any(Long.class));
+        service.deleteById(1L);
+        verify(repository, times(1)).deleteById(anyLong());
+    }
+    @Test
+    public void deleteByUuIdTest() {
+        Mockito.doNothing().when(repository).deleteByUuid(any(UUID.class));
+        service.deleteByUuid(UUID.randomUUID());
+        verify(repository, times(1)).deleteByUuid(any(UUID.class));
     }
 }
