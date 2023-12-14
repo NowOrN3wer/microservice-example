@@ -1,9 +1,9 @@
 package com.idb.example.microserviceexample.controllertest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.idb.example.microserviceexample.controller.ExampleController;
-import com.idb.example.microserviceexample.model.ExampleDto;
-import com.idb.example.microserviceexample.service.IExampleService;
+import com.idb.example.microserviceexample.controller.SampleController;
+import com.idb.example.microserviceexample.model.SampleDto;
+import com.idb.example.microserviceexample.service.ISampleService;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,22 +19,23 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ExampleController.class)
+@WebMvcTest(SampleController.class)
 @WebAppConfiguration
-public class ExampleControllerTest {
-    private static ExampleDto dto;
+public class SampleControllerTest {
+    private static SampleDto dto;
     @Autowired
     private WebApplicationContext context;
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    private IExampleService service;
+    private ISampleService service;
 
-    private final String apiString = "/api/example/";
+    private final String apiString = "/api/sample/";
 
     @Before
     public void before() {
@@ -43,7 +44,7 @@ public class ExampleControllerTest {
 
     @BeforeAll
     public static void intTests() {
-        dto = new ExampleDto();
+        dto = new SampleDto();
         dto.setName("name");
         dto.setId(1L);
         dto.setVersion(1);
@@ -56,7 +57,7 @@ public class ExampleControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isCreated());
-        ExampleDto result = service.create(dto);
+        SampleDto result = service.create(dto);
         assertNotNull(result);
         assertEquals(dto, result);
     }
@@ -68,7 +69,7 @@ public class ExampleControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isOk());
-        ExampleDto result = service.update(dto);
+        SampleDto result = service.update(dto);
         assertNotNull(result);
         assertEquals(dto, result);
     }
