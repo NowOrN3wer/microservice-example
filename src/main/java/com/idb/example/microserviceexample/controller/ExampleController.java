@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
+
 import java.util.UUID;
 
 @RestController
@@ -32,9 +34,20 @@ public class ExampleController {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("deleteByUuid/{uuid}")
     public ResponseEntity<?> deleteByUuid(@PathVariable UUID uuid) {
         service.deleteByUuid(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("getList")
+    public ResponseEntity<?> getList() {
+        return new ResponseEntity<>(service.getList(), HttpStatus.OK);
+    }
+
+    @PostMapping("getPage")
+    public ResponseEntity<?> getPage(@RequestBody ExampleDto queryDto, Pageable pageable) {
+        return new ResponseEntity<>(service.getPage(queryDto, pageable), HttpStatus.OK);
     }
 }

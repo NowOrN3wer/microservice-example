@@ -1,15 +1,20 @@
 package com.idb.example.microserviceexample.service.imp;
 
-import com.idb.example.microserviceexample.entity.Example;
+import com.idb.example.microserviceexample.entity.ExampleEntity;
 import com.idb.example.microserviceexample.model.ExampleDto;
 import com.idb.example.microserviceexample.repository.IExampleRepository;
 import com.idb.example.microserviceexample.service.IExampleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 
 @Service
 public class ExampleServiceImp implements IExampleService {
@@ -45,11 +50,28 @@ public class ExampleServiceImp implements IExampleService {
         repository.deleteByUuid(uuid);
     }
 
-    private Example dtoToEntity(ExampleDto dto) {
-        return modelMapper.map(dto, Example.class);
+    @Override
+    public List<ExampleDto> getList() {
+        return repository.findAll().stream().map((entity) ->
+                modelMapper.map(entity, ExampleDto.class)).collect(Collectors.toList());
     }
 
-    private ExampleDto entityToDto(Example entity) {
+    public Page<ExampleDto> getPage(ExampleDto queryDto, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher.matchingAll()
+                .withMatcher("name", contains().ignoreCase());
+        Example<ExampleEntity> filter = Example.of(dtoToEntity(queryDto), matcher);
+        return toPageObjectDto(repository.findAll(filter, pageable));
+    }
+
+    private Page<ExampleDto> toPageObjectDto(Page<ExampleEntity> objects) {
+        return objects.map(this::entityToDto);
+    }
+
+    private ExampleEntity dtoToEntity(ExampleDto dto) {
+        return modelMapper.map(dto, ExampleEntity.class);
+    }
+
+    private ExampleDto entityToDto(ExampleEntity entity) {
         return modelMapper.map(entity, ExampleDto.class);
     }
 }

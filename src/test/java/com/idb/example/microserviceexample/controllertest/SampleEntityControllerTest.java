@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(SampleController.class)
 @WebAppConfiguration
-public class SampleControllerTest {
+public class SampleEntityControllerTest {
     private static SampleDto dto;
     @Autowired
     private WebApplicationContext context;

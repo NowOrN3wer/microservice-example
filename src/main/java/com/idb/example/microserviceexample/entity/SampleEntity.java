@@ -14,8 +14,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-@Table(name = "example", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}, name = "uk_example"))
-public class Example extends BaseEntity {
+@Table(name = "sample", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}, name = "uk_sample"))
+public class SampleEntity extends BaseSoftDeleteEntity {
     @Column(name = "name", length = 100, nullable = false)
     @NotBlank
     private String name;

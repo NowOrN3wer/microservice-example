@@ -1,6 +1,6 @@
 package com.idb.example.microserviceexample.servicetest;
 
-import com.idb.example.microserviceexample.entity.Example;
+import com.idb.example.microserviceexample.entity.ExampleEntity;
 import com.idb.example.microserviceexample.model.ExampleDto;
 import com.idb.example.microserviceexample.repository.IExampleRepository;
 import com.idb.example.microserviceexample.service.imp.ExampleServiceImp;
@@ -22,9 +22,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-public class ExampleServiceTest {
+public class ExampleEntityServiceTest {
     private static ExampleDto dto;
-    private static Example entity;
+    private static ExampleEntity entity;
     @Mock
     private IExampleRepository repository;
     @InjectMocks
@@ -34,7 +34,7 @@ public class ExampleServiceTest {
 
     @BeforeAll
     public static void intTests() {
-        entity = new Example();
+        entity = new ExampleEntity();
         entity.setName("name");
         entity.setId(1L);
         entity.setVersion(1);
@@ -52,8 +52,8 @@ public class ExampleServiceTest {
 
     @Test
     public void createTest() {
-        Mockito.when(repository.save(any(Example.class))).thenReturn(entity);
-        when(modelMapper.map(eq(dto), eq(Example.class))).thenReturn(entity);
+        Mockito.when(repository.save(any(ExampleEntity.class))).thenReturn(entity);
+        when(modelMapper.map(eq(dto), eq(ExampleEntity.class))).thenReturn(entity);
         when(modelMapper.map(eq(entity), eq(ExampleDto.class))).thenReturn(dto);
         ExampleDto result = service.create(dto);
         assertNotNull(result);
@@ -62,8 +62,8 @@ public class ExampleServiceTest {
 
     @Test
     public void updateTest() {
-        Mockito.when(repository.save(any(Example.class))).thenReturn(entity);
-        when(modelMapper.map(eq(dto), eq(Example.class))).thenReturn(entity);
+        Mockito.when(repository.save(any(ExampleEntity.class))).thenReturn(entity);
+        when(modelMapper.map(eq(dto), eq(ExampleEntity.class))).thenReturn(entity);
         when(modelMapper.map(eq(entity), eq(ExampleDto.class))).thenReturn(dto);
         ExampleDto result = service.update(dto);
         assertNotNull(result);

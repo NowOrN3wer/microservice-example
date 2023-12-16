@@ -1,6 +1,6 @@
 package com.idb.example.microserviceexample.service.imp;
 
-import com.idb.example.microserviceexample.entity.Sample;
+import com.idb.example.microserviceexample.entity.SampleEntity;
 import com.idb.example.microserviceexample.model.SampleDto;
 import com.idb.example.microserviceexample.repository.ISampleRepository;
 import com.idb.example.microserviceexample.service.ISampleService;
@@ -21,7 +21,7 @@ public class SampleServiceImp implements ISampleService {
 
     @Override
     public SampleDto create(SampleDto dto) {
-        Sample entity = dtoToEntity(dto);
+        SampleEntity entity = dtoToEntity(dto);
         return entityToDto(repository.save(entity));
     }
     @Override
@@ -29,10 +29,13 @@ public class SampleServiceImp implements ISampleService {
         var entity = dtoToEntity(dto);
         return entityToDto(repository.save(entity));
     }
-    private Sample dtoToEntity(SampleDto dto) {
-        return modelMapper.map(dto, Sample.class);
+
+
+
+    private SampleEntity dtoToEntity(SampleDto dto) {
+        return modelMapper.map(dto, SampleEntity.class);
     }
-    private SampleDto entityToDto(Sample entity) {
+    private SampleDto entityToDto(SampleEntity entity) {
         return modelMapper.map(entity, SampleDto.class);
     }
 }
