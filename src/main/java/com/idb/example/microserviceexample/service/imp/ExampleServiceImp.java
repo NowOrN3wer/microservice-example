@@ -15,6 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
 @Service
 public class ExampleServiceImp implements IExampleService {
@@ -56,9 +57,11 @@ public class ExampleServiceImp implements IExampleService {
                 modelMapper.map(entity, ExampleDto.class)).collect(Collectors.toList());
     }
 
+    @Override
     public Page<ExampleDto> getPage(ExampleDto queryDto, Pageable pageable) {
-        ExampleMatcher matcher = ExampleMatcher.matchingAll()
-                .withMatcher("name", contains().ignoreCase());
+        ExampleMatcher matcher = ExampleMatcher.matchingAny()
+                .withMatcher("name", contains().ignoreCase()).
+                withMatcher("id", exact());
         Example<ExampleEntity> filter = Example.of(dtoToEntity(queryDto), matcher);
         return toPageObjectDto(repository.findAll(filter, pageable));
     }
